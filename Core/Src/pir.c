@@ -11,20 +11,20 @@ PirData_t pirGetData(){
 
     GPIOB->BSRR = GPIO_PIN_0;
     
-    delayUs(110);
+    delayUs(120);
 
     GPIOB->BRR = GPIO_PIN_0;
-    delayUs(5);
+    delayUs(1);
 
     for(int i = 0; i < 28; i++){
 
         GPIOB->BSRR = GPIO_PIN_0;
-        delayUs(2);
+        delayUs(1);
         GPIOB->BRR = GPIO_PIN_0;
 
         GPIOB->MODER &= ~(3U);
 
-        delayUs(3);
+        delayUs(1);
 
         data <<= 1;
         data |= (GPIOB->IDR & GPIO_PIN_0);
@@ -34,7 +34,7 @@ PirData_t pirGetData(){
     }
 
     GPIOB->BRR = GPIO_PIN_0;
-    delayUs(1250);
+    delayUs(1300);
 
     return (PirData_t){((uint16_t)(data >> 14)) & 0x3FFF, ((uint16_t)data) & 0x3FFF};
 }
