@@ -66,6 +66,9 @@ static void MX_TIM3_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+  static uint16_t pir;
+  static uint8_t pirr[2];
+
 /* USER CODE END 0 */
 
 /**
@@ -114,21 +117,22 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-      uint16_t pir = pirGetData().tempValue;
+      pir = pirGetData().pirValue;
       
-      uint8_t pirr[2] = {pir >> 8, pir};
+      pirr[0] = pir >> 8;
+      pirr[1] = pir;
 
       HAL_UART_Transmit(&huart2, pirr, 2, 100);
 
-      /*
-      if((pir - 8192) > 4000 || (pir - 8192) < -4000)
+      
+      if(pir < 13000)
           GPIOA->BSRR = GPIO_PIN_6;
       else
           GPIOA->BRR = GPIO_PIN_6;
-      */
+      
 
 
-      HAL_Delay(300);
+      HAL_Delay(200);
 
   }
   /* USER CODE END 3 */
