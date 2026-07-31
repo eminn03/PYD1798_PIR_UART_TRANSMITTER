@@ -117,19 +117,19 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-      pir = pirGetData().pirValue;
+      pir = pirGetData().tempValue;
       
       pirr[0] = pir >> 8;
       pirr[1] = pir;
 
       HAL_UART_Transmit(&huart2, pirr, 2, 100);
 
-      
+      /*
       if(pir < 13000)
           GPIOA->BSRR = GPIO_PIN_6;
       else
           GPIOA->BRR = GPIO_PIN_6;
-      
+      */
 
 
       HAL_Delay(200);
