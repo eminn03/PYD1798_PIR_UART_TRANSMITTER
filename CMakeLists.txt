@@ -47,6 +47,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
     Core/Src/pir.c
     Core/Src/delay.c
+    Core/Src/GPIO.c
 )
 
 # Add include paths
