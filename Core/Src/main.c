@@ -117,10 +117,10 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-      pir = pirGetData().tempValue;
+      pir = pirGetData().pirValue;
       
       pirr[0] = pir >> 8;
-      pirr[1] = pir;
+      pirr[1] = pir & 0x00FF;
 
       HAL_UART_Transmit(&huart2, pirr, 2, 100);
 

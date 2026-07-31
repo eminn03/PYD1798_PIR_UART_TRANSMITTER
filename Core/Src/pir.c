@@ -1,18 +1,14 @@
 #include "../Inc/pir.h"
 #include "../Inc/delay.h"
 #include "../Inc/GPIO.h"
+#include <stdbool.h>
 
 
 PirData_t pirGetData(){
 
-    uint32_t data = 0x0;
-    static uint32_t timer = 0;
-    static bool isReady = TRUE;
-
-    if(isReady == FALSE)
-        return;
-
-    timer =
+    uint16_t data[2] = {0, 0};
+    uint16_t tempData = 0;
+    bool result = false;
     GPIO_PinSetAsOutput(GPIOB, GPIO_PIN_0);
 
     GPIO_PinSetOutputValue(GPIOB, GPIO_PIN_0, HIGH);
@@ -22,8 +18,9 @@ PirData_t pirGetData(){
     GPIO_PinSetOutputValue(GPIOB, GPIO_PIN_0, LOW); // Reset Pin
 
     delayUs(1); // tDL
-
-    for(int i = 0; i < 28; i++){
+    for(int j = 0; j < 2; j++)
+    {
+        for(int i = 0; i < 14; i++){
 
         GPIO_PinSetOutputValue(GPIOB, GPIO_PIN_0, LOW); // Reset Pin
         GPIO_PinSetAsOutput(GPIOB, GPIO_PIN_0); // Output Mode
@@ -33,12 +30,16 @@ PirData_t pirGetData(){
         GPIO_PinSetOutputValue(GPIOB, GPIO_PIN_0, HIGH); // Set Pin
         GPIO_PinSetAsInput(GPIOB, GPIO_PIN_0); // Input Mode
 
-        GPIO_PinSetOutputValue(GPIOA, GPIO_PIN_6, HIGH);
         delayUs(20); // tDH + tBS
-        GPIO_PinSetOutputValue(GPIOA, GPIO_PIN_6, LOW);
 
-        data <<= 1; 
-        data |= GPIO_PinGetInputValue(GPIOB, GPIO_PIN_0) & 0x01; // Write Pin Value to data  
+        tempData <<= 1; 
+        result = GPIO_PinGetInputValue(GPIOB, GPIO_PIN_0) & 0x01; // Write Pin Value to data  
+
+        if(result)
+            tempData |= 0x01;
+    }
+        data[j] = tempData;
+        tempData = 0;
     }
 
     	// Stop command send (Tstop)
@@ -48,7 +49,7 @@ PirData_t pirGetData(){
 
 	GPIO_PinSetAsInput(GPIOB, GPIO_PIN_0);	// release the pin
     
-    delayUs(1300);
+    delayUs(2000);
 
-    return (PirData_t){((uint16_t)(data >> 14)) & 0x3FFF, ((uint16_t)data) & 0x3FFF};
+    return (PirData_t){((uint16_t)(data[0])), ((uint16_t)data[1])};
 }
