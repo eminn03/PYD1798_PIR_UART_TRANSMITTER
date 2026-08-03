@@ -13,6 +13,7 @@ typedef struct{
 }PirData_t;
 
 
+void pirInit();
 PirData_t pirGetData();
 
 

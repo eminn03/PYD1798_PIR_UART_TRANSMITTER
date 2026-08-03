@@ -106,6 +106,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   delayInit(&htim3);
+  pirInit();
 
   /* USER CODE END 2 */
 
@@ -123,14 +124,6 @@ int main(void)
       pirr[1] = pir & 0x00FF;
 
       HAL_UART_Transmit(&huart2, pirr, 2, 100);
-
-      /*
-      if(pir < 13000)
-          GPIOA->BSRR = GPIO_PIN_6;
-      else
-          GPIOA->BRR = GPIO_PIN_6;
-      */
-
 
       HAL_Delay(200);
 

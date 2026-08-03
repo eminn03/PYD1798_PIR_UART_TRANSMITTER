@@ -4,6 +4,11 @@
 #include <stdbool.h>
 
 
+void pirInit(){
+
+      GPIOB->PUPDR &= ~(3U << (0 * 2));
+}
+
 PirData_t pirGetData(){
 
     uint16_t data[2] = {0, 0};
@@ -28,9 +33,12 @@ PirData_t pirGetData(){
         delayUs(1);
 
         GPIO_PinSetOutputValue(GPIOB, GPIO_PIN_0, HIGH); // Set Pin
+        
+        delayUs(1);
+
         GPIO_PinSetAsInput(GPIOB, GPIO_PIN_0); // Input Mode
 
-        delayUs(20); // tDH + tBS
+        delayUs(7); // tDH + tBS
 
         tempData <<= 1; 
         result = GPIO_PinGetInputValue(GPIOB, GPIO_PIN_0) & 0x01; // Write Pin Value to data  
