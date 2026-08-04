@@ -24,6 +24,8 @@
 
 #include "../Inc/delay.h"
 #include "../Inc/pir.h"
+#include "../Inc/uartTx.h"
+#include "../Inc/dispatcher.h"
 
 /* USER CODE END Includes */
 
@@ -66,9 +68,6 @@ static void MX_TIM3_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-  static uint16_t pir;
-  static uint8_t pirr[2];
-
 /* USER CODE END 0 */
 
 /**
@@ -107,6 +106,7 @@ int main(void)
 
   delayInit(&htim3);
   pirInit();
+  uartTxInit(&huart2);
 
   /* USER CODE END 2 */
 
@@ -118,15 +118,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-      pir = pirGetData().pirValue;
-      
-      pirr[0] = pir >> 8;
-      pirr[1] = pir & 0x00FF;
-
-      HAL_UART_Transmit(&huart2, pirr, 2, 100);
-
-      HAL_Delay(200);
-
+    dispatcher();
   }
   /* USER CODE END 3 */
 }

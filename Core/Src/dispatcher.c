@@ -12,9 +12,9 @@ static uint8_t rawData[BUFFER_SIZE];
 
 void dispatcher(){
 
-    static uint32_t timer = HAL_GetTick();
+    static uint32_t timer = 0;
 
-    if(HAL_GetTick() - timer < 300)
+    if(HAL_GetTick() - timer < 500)
         return;
 
     timer = HAL_GetTick();
@@ -22,5 +22,5 @@ void dispatcher(){
 
     dataProcProcessData(rawData, pirGetData().pirValue);
 
-    uartTxTransmitText(rawData, BUFFER_SIZE);
+    uartTxTransmitText(rawData, BUFFER_SIZE + 1);
 }

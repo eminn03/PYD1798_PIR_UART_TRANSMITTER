@@ -1,5 +1,6 @@
 #include "../Inc/uartTx.h"
 #include "../Inc/dataDefinitions.h"
+#include "stm32c0xx_hal.h"
 #include <string.h>
 
 
@@ -7,7 +8,7 @@ static UART_HandleTypeDef* p_huart;
 static uint8_t txBuff[BUFFER_SIZE];
 
 
-void uartTxInit(UART_HandleTypeDef *huart){
+void uartTxInit(UART_HandleTypeDef* huart){
 
     p_huart = huart;
 }

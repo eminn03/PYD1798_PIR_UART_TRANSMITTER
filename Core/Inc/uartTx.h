@@ -2,7 +2,9 @@
 #define UART_TX_H
 
 #include <stdint.h>
-#include "stm32c0xx_hal.h"
+
+
+typedef struct __UART_HandleTypeDef UART_HandleTypeDef;
 
 
 void uartTxInit(UART_HandleTypeDef* huart);

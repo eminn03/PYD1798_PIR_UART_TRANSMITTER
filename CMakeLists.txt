@@ -48,6 +48,10 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Core/Src/pir.c
     Core/Src/delay.c
     Core/Src/GPIO.c
+    Core/Src/dispatcher.c
+    Core/Src/uartTx.c
+    Core/Src/dataProc.c
+    Core/Src/crc.c
 )
 
 # Add include paths
