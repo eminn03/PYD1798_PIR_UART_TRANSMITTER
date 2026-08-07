@@ -11,7 +11,7 @@ void dataProcProcessData(uint8_t *rawData, uint16_t pirData){
     rawData[DATA_IDX_PIR_MS] = (uint8_t)(pirData >> 8);
     rawData[DATA_IDX_PIR_LS] = (uint8_t)pirData;
 
-    uint16_t crc = CCITT_16(rawData, BUFFER_SIZE);
+    uint16_t crc = CCITT_16(rawData, DATA_LEN - 3);
 
     rawData[DATA_IDX_CRC_MS] = (uint8_t)(crc >> 8);
     rawData[DATA_IDX_CRC_LS] = (uint8_t)crc;

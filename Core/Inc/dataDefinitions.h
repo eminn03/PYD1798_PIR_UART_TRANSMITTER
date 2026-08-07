@@ -7,7 +7,7 @@
 #define DATA_STRT 0x02
 #define DATA_END 0x03
 #define DATA_DEV_ADDR 0x10
-#define DATA_LEN 0x8
+#define DATA_LEN 0x08
 
 
 typedef enum{
